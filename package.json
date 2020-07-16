@@ -1,0 +1,16 @@
+{
+  "name": "ural_srv",
+  "version": "1.0.0",
+  "description": "Uralserver nodejs app to get notifications about curren map and players.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mankor",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "puppeteer": "^5.1.0"
+  }
+}
