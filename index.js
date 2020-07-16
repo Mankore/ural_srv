@@ -57,7 +57,7 @@ app.all('*', (req, res) => {
     res.send('Invalid request');
 });
 
-app.listen(SRV_PORT, () => {
+app.listen(process.env.PORT || SRV_PORT, () => {
     console.log(`App is listening on port: ${SRV_PORT}`);
 });
 
