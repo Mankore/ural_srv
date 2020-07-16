@@ -18,15 +18,15 @@ async function getPlayers(page, player_num) {
 
     if (player_num >= 10) {
         for (let i = 0; i < 10; i++) {
-            const name = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i+2}]/td[2]/a`, 'textContent'));
-            const score = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i+2}]/td[3]`, 'textContent'));
-            players = [...players, {name, score}];
+            const name = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i + 2}]/td[2]/a`, 'textContent'));
+            const score = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i + 2}]/td[3]`, 'textContent'));
+            players = [...players, { name, score }];
         }
     } else {
         for (let i = 0; i < player_num; i++) {
-            const name = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i+2}]/td[2]/a`, 'textContent'));
-            const score = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i+2}]/td[3]`, 'textContent'));
-            players = [...players, {name, score}];
+            const name = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i + 2}]/td[2]/a`, 'textContent'));
+            const score = clearString(await getElemText(page, `//*[@id="HTML_online_players"]/div/table/tbody/tr[${i + 2}]/td[3]`, 'textContent'));
+            players = [...players, { name, score }];
         }
     }
 
@@ -35,11 +35,9 @@ async function getPlayers(page, player_num) {
 
 async function scrape(url) {
     const browser = await puppeteer.launch({
-        args : [
-          '--no-sandbox',
-          '--disable-setuid-sandbox'
-        ]
-      });
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     await page.goto(url);
 
@@ -51,7 +49,7 @@ async function scrape(url) {
     const date = new Date();
 
     browser.close();
-    return {player_num, player_total, map, date, players};
+    return { player_num, player_total, map, date, players };
 }
 
 exports.scrape = scrape;
