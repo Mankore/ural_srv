@@ -48,7 +48,7 @@ async function scrape(url) {
     const players = await getPlayers(page, player_num);
     const date = new Date();
 
-    browser.close();
+    await browser.close();
     return { player_num, player_total, map, date, players };
 }
 
