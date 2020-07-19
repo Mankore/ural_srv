@@ -72,4 +72,4 @@ setInterval(() => {
     scrape(link).then(obj => {
         cached_obj = obj;
     }).catch(err => console.log(err));
-}, request_every * 1000);
+}, request_every * 1000 * 60);
