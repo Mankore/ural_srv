@@ -1,0 +1,52 @@
+{
+  "object": {
+    "player_num": "39",
+    "player_total": "76",
+    "map": "pja310",
+    "date": "2020-07-23T20:56:21.715Z",
+    "players": [
+      {
+        "name": "SkyForce",
+        "score": "76"
+      },
+      {
+        "name": "HEMI",
+        "score": "68"
+      },
+      {
+        "name": "RAMBO",
+        "score": "61"
+      },
+      {
+        "name": "Toma [RAKIJA]",
+        "score": "56"
+      },
+      {
+        "name": "TIGAR",
+        "score": "52"
+      },
+      {
+        "name": "[R]ZamOk",
+        "score": "52"
+      },
+      {
+        "name": "Ghost",
+        "score": "49"
+      },
+      {
+        "name": "DAV",
+        "score": "42"
+      },
+      {
+        "name": "ГРИБЭЛА [USSR]",
+        "score": "30"
+      },
+      {
+        "name": "Chemberland",
+        "score": "29"
+      }
+    ],
+    "map_date": "2020-07-23T20:56:21.878Z",
+    "isMapChanged": false
+  }
+}
