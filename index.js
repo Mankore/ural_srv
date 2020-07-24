@@ -1,10 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-var http = require('http');
-var options = {
-  host: 'https://ural-srv.herokuapp.com'
-};
+var https = require('https');
 
 // Lowdb testing
 const low = require('lowdb');
@@ -42,7 +39,7 @@ app.listen(process.env.PORT || SRV_PORT, () => {
     console.log(`App is listening on port: ${process.env.PORT || SRV_PORT}`);
 });
 
-// setReqInterval(); Это костыль
+setReqInterval();  // Это костыль
 initialize();
 
 function initialize() {
@@ -110,15 +107,12 @@ const ownUrl = "https://ural-srv.herokuapp.com/";
 function setReqInterval() {
     console.log('setting interval');
     setInterval(() => {
-        // fetch(ownUrl).then((res) => {
-        //     console.log(res);
-        //     console.log('I sent req to myself');
-        // }).catch(err => {
-        //     console.log('Caught an error');
-        //     console.log(err);
-        // });
-        http.get(options, (res) => {
-            console.log(res);
-        })
-    }, 1 * 60 * 1000); // every 29 minutes
+        console.log('Sending self-request');
+        https.get(ownUrl, (res) => {
+            res.setEncoding('utf8');
+            res.on('data', function(chunk){
+                console.log(chunk);
+            });
+        });
+    }, 29 * 60 * 1000); // every 29 minutes
 }

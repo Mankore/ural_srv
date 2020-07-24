@@ -1,5 +1,5 @@
 {
-  "name": "ural_srv",
+  "name": "ural-srv",
   "version": "1.0.0",
   "description": "Uralserver nodejs app to get notifications about curren map and players.",
   "main": "index.js",
