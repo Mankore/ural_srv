@@ -42,7 +42,7 @@ app.listen(process.env.PORT || SRV_PORT, () => {
     console.log(`App is listening on port: ${process.env.PORT || SRV_PORT}`);
 });
 
-setReqInterval();
+// setReqInterval(); Это костыль
 initialize();
 
 function initialize() {
