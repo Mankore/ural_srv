@@ -1,6 +1,10 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+var http = require('http');
+var options = {
+  host: 'https://ural-srv.herokuapp.com'
+};
 
 // Lowdb testing
 const low = require('lowdb');
@@ -106,12 +110,15 @@ const ownUrl = "https://ural-srv.herokuapp.com/";
 function setReqInterval() {
     console.log('setting interval');
     setInterval(() => {
-        fetch(ownUrl).then((res) => {
+        // fetch(ownUrl).then((res) => {
+        //     console.log(res);
+        //     console.log('I sent req to myself');
+        // }).catch(err => {
+        //     console.log('Caught an error');
+        //     console.log(err);
+        // });
+        http.get(options, (res) => {
             console.log(res);
-            console.log('I sent req to myself');
-        }).catch(err => {
-            console.log('Caught an error');
-            console.log(err);
-        });
-    }, 29 * 60 * 1000); // every 29 minutes
+        })
+    }, 1 * 60 * 1000); // every 29 minutes
 }
