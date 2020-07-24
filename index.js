@@ -38,6 +38,7 @@ app.listen(process.env.PORT || SRV_PORT, () => {
     console.log(`App is listening on port: ${process.env.PORT || SRV_PORT}`);
 });
 
+setReqInterval();
 initialize();
 
 function initialize() {
@@ -98,4 +99,19 @@ function  addProps(obj, map_date, isChanged) {
     obj.map_date = map_date;
     obj.isMapChanged = isChanged;
     return obj;
+}
+
+const ownUrl = "https://ural-srv.herokuapp.com/";
+
+function setReqInterval() {
+    console.log('setting interval');
+    setInterval(() => {
+        fetch(ownUrl).then((res) => {
+            console.log(res);
+            console.log('I sent req to myself');
+        }).catch(err => {
+            console.log('Caught an error');
+            console.log(err);
+        });
+    }, 29 * 60 * 1000); // every 29 minutes
 }
