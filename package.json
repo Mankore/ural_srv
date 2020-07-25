@@ -1,6 +1,6 @@
 {
   "name": "ural-srv",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Uralserver nodejs app to get notifications about curren map and players.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
-    "lowdb": "^1.0.0",
+    "mongoose": "^5.9.25",
     "puppeteer": "^5.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
