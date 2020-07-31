@@ -21,7 +21,7 @@ const { scrape, link } = require("./scrapper");
 const app = express();
 
 const SRV_PORT = 3000;
-const request_every = 0.5; // minutes
+const request_every = 5; // minutes
 
 app.use(helmet());
 app.use(cors());
@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/info", async (req, res, next) => {
-  let oldObj = await getOldObject();
+  let oldObj = await getOldObject('object');
   res.send(oldObj);
 });
 
@@ -51,7 +51,7 @@ function initialize() {
   scrape(link)
     .then(async (obj) => {
       // Get the cached object from the database
-      let oldObject = await getOldObject();
+      let oldObject = await getOldObject('object');
 
       if (Object.keys(oldObject).length === 0 && oldObject.constructor === Object) {
         // Initialising fresh data with fresh map_date
@@ -72,7 +72,7 @@ function initialize() {
       }
 
       // Update existing object
-      await updateOldObject(obj);
+      await updateOldObject(obj, 'object');
     })
     .catch((err) => console.log(err));
 
@@ -81,7 +81,7 @@ function initialize() {
     console.log("\nScraping..");
     scrape(link)
       .then(async (obj) => {
-        let cached_obj = await getOldObject();
+        let cached_obj = await getOldObject('object');
 
         console.log(cached_obj.map);
         console.log(obj.map);
@@ -93,7 +93,7 @@ function initialize() {
           addProps(obj, cached_obj.map_date, false);
         }
 
-        await updateOldObject(obj);
+        await updateOldObject(obj, 'object');
       })
       .catch((err) => console.log(err));
   }, request_every * 1000 * 60);
@@ -120,9 +120,9 @@ function setReqInterval() {
   }, 29 * 60 * 1000); // every 29 minutes
 }
 
-async function getOldObject() {
+async function getOldObject(collection) {
   return new Promise((resolve, reject) => {
-    dbm.collection("object").findOne({}, (err, json) => {
+    dbm.collection(collection).findOne({}, (err, json) => {
       if (err) {
         reject(err);
         throw err;
@@ -133,9 +133,9 @@ async function getOldObject() {
   });
 }
 
-async function updateOldObject(newObject) {
+async function updateOldObject(newObject, collection) {
   return new Promise((resolve, reject) => {
-    dbm.collection("object").replaceOne({}, newObject, (err, res) => {
+    dbm.collection(collection).replaceOne({}, newObject, (err, res) => {
       if (err) {
         console.log(err);
         console.log("failed to update object");
@@ -149,26 +149,35 @@ async function updateOldObject(newObject) {
   });
 }
 
-async function clearCollection() {
-  dbm.collection("object").deleteMany({}, (err, res) => {
-    if (err) {
-      console.log(err);
-      console.log("failed to delete objects");
-    } else {
-      //console.log(res);
-      console.log("removed all objects");
-    }
-  });
+async function clearCollection(collection) {
+  return new Promise((resolve, reject) => {
+    dbm.collection(collection).deleteMany({}, (err, res) => {
+      if (err) {
+        console.log(err);
+        console.log("failed to delete objects");
+        reject(err);
+      } else {
+        //console.log(res);
+        console.log("removed all objects");
+        resolve(res);
+      }
+    });
+
+  })
 }
 
-async function addItemToCollection(newObject) {
-  dbm.collection("object").insertOne(newObject, (err, res) => {
-    if (err) {
-      //console.log(err);
-      console.log("failed to add object");
-    } else {
-      //console.log(res);
-      console.log("Added object to db");
-    }
-  });
+async function addItemToCollection(newObject, collection) {
+  return new Promise((resolve, reject) => {
+    dbm.collection(collection).insertOne(newObject, (err, res) => {
+      if (err) {
+        //console.log(err);
+        console.log("failed to add object");
+        reject(err);
+      } else {
+        //console.log(res);
+        console.log("Added object to db");
+        resolve(res);
+      }
+    });
+  })
 }
