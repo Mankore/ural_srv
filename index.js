@@ -40,10 +40,10 @@ app.all("*", (req, res) => {
 
 app.listen(process.env.PORT || SRV_PORT, () => {
   console.log(`App is listening on port: ${process.env.PORT || SRV_PORT}`);
+  //setReqInterval(); // Это костыль
+  initialize();
 });
 
-setReqInterval(); // Это костыль
-initialize();
 
 function initialize() {
   console.log("Initializing requests setInterval");
